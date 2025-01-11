@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TaskForm from './TaskForm';
 import Task from './Task';
+import { URL } from '../App';
 
 const TaskList = () => {
   const [formData, setFormData] = useState({
@@ -29,7 +30,7 @@ const TaskList = () => {
     }
 
     try {
-      await axios.post("http://localhost:5000/api/tasks", formData);
+      await axios.post(`${URL}/api/tasks`, formData);
       toast.success("Task added successfully");
       setFormData({ // Clear the form
         ...formData,
