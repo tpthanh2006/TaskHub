@@ -1,12 +1,17 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import TaskForm from './TaskForm';
 import Task from './Task';
 import { URL } from '../App';
+import loadingImg from "../assets/loader.gif";
 
 const TaskList = () => {
+    const [tasks, setTasks] = useState([]);
+    const [completedTasks, setCompletedTasks] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);
+
   const [formData, setFormData] = useState({
       name: "",
       completed: false
@@ -21,6 +26,22 @@ const TaskList = () => {
       [name]: value,
     })
   }
+
+  const getTasks = async () => {
+    setIsLoading(true);
+    try {
+      const { data } = await axios.get(`${URL}/api/tasks`);
+      setTasks(data);
+      setIsLoading(false);
+    } catch (error) {
+      toast.error(error.message);
+      setIsLoading(false);
+    }
+  }
+
+  useEffect(() => {
+    getTasks();
+  }, []);
 
   const createTask = async (e) => {
     e.preventDefault();
@@ -42,6 +63,16 @@ const TaskList = () => {
     //console.log(formData);
   };
 
+  const deleteTask = async (id) => {
+    try {
+      await axios.delete(`${URL}/api/tasks/${id}`);
+      getTasks(); // Fetch the updated tasks
+      toast.success("Task deleted successfully");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div>
       <h2>Task Manager</h2>
@@ -56,8 +87,32 @@ const TaskList = () => {
       </div>
 
       <hr />
+      {
+        isLoading && (
+          <div className="--flex-center">
+            <img src={loadingImg} alt="loading" />
+          </div>
+        )
+      }
 
-      <Task />
+      {
+        !isLoading && tasks.length === 0 ? (
+          <p className="--py">No task found. Please add a task. </p>
+        ) : (
+          <>
+          {tasks.map((task, index) => {
+            return (
+              <Task
+              key={task._id}
+              task={task}
+              index={index}
+              deleteTask={deleteTask}
+              />
+            )
+          })}
+          </>
+        )
+      }
     </div>
   )
 }

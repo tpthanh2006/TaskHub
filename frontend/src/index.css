@@ -2,8 +2,8 @@
 
 :root {
   --font-family: "Poppins", sans-serif;
-  --dark-blue: #0d62e1;
-  --light-blue: #5cdbdb;
+  --dark-blue: #0a1930;
+  --light-blue: #1f93ff;
 
   --color-white: #fff;
   --color-dark: #333;
@@ -11,7 +11,7 @@
   --color-grey: #eee;
   --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 
-  --color-purple: #3ab87d;
+  --color-purple: #9d0191;
   --color-orange: #ff7722;
 
   --color-primary: #007bff;
@@ -43,14 +43,6 @@ section {
   max-width: 1000px;
   margin: 0 auto;
   padding: 0 20px;
-}
-
-#taskManager {
-  text-align: center;
-  font-family: Arial, sans-serif;
-  font-size: 30px;
-  font-weight: 700;
-  color: #007bff;
 }
 
 /* UTILITY CLASSES */
@@ -547,5 +539,14 @@ a:hover {
 
 .task-icons > * {
   margin-left: 7px;
+  cursor: pointer;
+}
+
+.task__icons {
+  font-size: 1.6rem;
+}
+
+.task__icons > * {
+  margin-left: 15px; /* Increased margin for better spacing */
   cursor: pointer;
 }
