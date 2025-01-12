@@ -5,7 +5,6 @@ import TaskForm from './TaskForm';
 import Task from './Task';
 import { URL } from '../App';
 import loadingImg from "../assets/loader.gif";
-import { get } from 'mongoose';
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
