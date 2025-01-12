@@ -7,9 +7,8 @@ const mongoose = require("mongoose");
 const Task = require("./models/taskModel")
 const taskRoutes = require("./routes/taskRoute");
 const cors = require("cors");
-const path = require("path");
-
 const app = express();
+const path = require("path");
 
 //Middleware
 app.use(express.json());
@@ -19,12 +18,11 @@ app.use(express.urlencoded({extended: false}));
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "https://taskhub-l93f.onrender.com"],
+    "https://taskhub-app-bf9565735ec7.herokuapp.com/"],
 }));
 
 app.use("/api/tasks", taskRoutes);
 
-// DEPLOYMENT CODE
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "../frontend/build")));
 
@@ -34,7 +32,7 @@ if (process.env.NODE_ENV === "production") {
   })
 } else {
   app.get("/", (req, res) => {
-    res.send("API is running...");
+    res.send("Home Page");
   });
 }
 

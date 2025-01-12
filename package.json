@@ -8,7 +8,7 @@
     "backend": "nodemon backend/server.js",
     "frontend": "npm start --prefix frontend",
     "both": "concurrently \"npm run backend\" \"npm run frontend\"",
-    "build": "npm run build --prefix frontend"
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix frontend && npm run build --prefix frontend"
   },
   "keywords": [],
   "author": "",
@@ -27,5 +27,9 @@
     "react-icons": "^5.4.0",
     "react-scripts": "^5.0.1",
     "react-toastify": "^11.0.2"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
   }
 }
