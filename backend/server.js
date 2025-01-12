@@ -15,7 +15,9 @@ app.use(express.urlencoded({extended: false}));
 
 //Cors need to come on top of routes
 app.use(cors({
-  origin: ["http://localhost:3000"],
+  origin: [
+    "http://localhost:3000",
+    "taskhub.onrender.com"],
 }));
 
 app.use("/api/tasks", taskRoutes);
