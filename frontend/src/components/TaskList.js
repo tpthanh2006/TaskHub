@@ -54,16 +54,16 @@ const TaskList = () => {
     }
 
     try {
-      await axios.post(`${URL}/api/tasks`, formData);
+      const { data } = await axios.post(`${URL}/api/tasks`, formData);
       toast.success("Task added successfully");
+      setTasks([...tasks, data]); // Add the new task to the current tasks list
       setFormData({ // Clear the form
         ...formData,
         name: "",
-      })
+      });
     } catch (error) {
       toast.error(error.message);
     }
-    //console.log(formData);
   };
 
   const deleteTask = async (id) => {
@@ -75,6 +75,13 @@ const TaskList = () => {
       toast.error(error.message);
     }
   };
+
+  useEffect(() => {
+    const cTask = tasks.filter((task) => {
+      return task.completed === true;
+    })
+    setCompletedTasks(cTask);
+  }, [tasks])
 
   const getSingleTask = async (task) => {
     setFormData({
@@ -126,16 +133,19 @@ const TaskList = () => {
         isEditing={isEditing}
         updateTask={updateTask}
       />
-      <div className="--flex-between --pb">
-        <p>
-          <b>Total Tasks: </b> 0
-        </p>
-        <p>
-          <b>Completed Tasks: </b> 0
-        </p>
-      </div>
-
+      {tasks.length > 0 && (
+        <div className="--flex-between --pb">
+          <p>
+            <b>Total Tasks: </b> {tasks.length}
+          </p>
+          <p>
+            <b>Completed Tasks: </b> {completedTasks.length}
+          </p>
+        </div>
+      )}
+      
       <hr />
+
       {
         isLoading && (
           <div className="--flex-center">
