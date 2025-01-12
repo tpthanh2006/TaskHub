@@ -17,7 +17,7 @@ app.use(express.urlencoded({extended: false}));
 app.use(cors({
   origin: [
     "http://localhost:3000",
-    "http://taskhub.onrender.com"],
+    "https://taskhub-l93f.onrender.com"],
 }));
 
 app.use("/api/tasks", taskRoutes);
