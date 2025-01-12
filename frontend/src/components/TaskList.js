@@ -6,11 +6,14 @@ import TaskForm from './TaskForm';
 import Task from './Task';
 import { URL } from '../App';
 import loadingImg from "../assets/loader.gif";
+import { get } from 'mongoose';
 
 const TaskList = () => {
     const [tasks, setTasks] = useState([]);
     const [completedTasks, setCompletedTasks] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isEditing, setIsEditing] = useState(false);
+    const [taskID, setTaskID] = useState("");
 
   const [formData, setFormData] = useState({
       name: "",
@@ -73,10 +76,56 @@ const TaskList = () => {
     }
   };
 
+  const getSingleTask = async (task) => {
+    setFormData({
+      name: task.name,
+      completed: false,
+    });
+    setTaskID(task._id);
+    setIsEditing(true);
+  };
+
+  const updateTask = async(e) => {
+    e.preventDefault();
+
+    if (name === "") {
+      return toast.error("Name is required");
+    }
+
+    try {
+      await axios.put(`${URL}/api/tasks/${taskID}`, formData);
+      setFormData({...formData, name: ""});
+      setIsEditing(false);
+      getTasks();
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
+  const setToComplete = async (task) => {
+    const newFormData = {
+      name: task.name,
+      completed: true,
+    };
+
+    try {
+      await axios.put(`${URL}/api/tasks/${task._id}`, newFormData);
+      getTasks();
+      toast.success("Task completed");
+    } catch (error) {
+      toast.error(error.message);
+    }
+  };
+
   return (
     <div>
       <h2>Task Manager</h2>
-      <TaskForm name={name} handleInputChange={handleInputChange} createTask={createTask}/>
+      <TaskForm
+        name={name}
+        handleInputChange={handleInputChange} createTask={createTask}
+        isEditing={isEditing}
+        updateTask={updateTask}
+      />
       <div className="--flex-between --pb">
         <p>
           <b>Total Tasks: </b> 0
@@ -107,6 +156,8 @@ const TaskList = () => {
               task={task}
               index={index}
               deleteTask={deleteTask}
+              getSingleTask={getSingleTask}
+              setToComplete={setToComplete}
               />
             )
           })}
