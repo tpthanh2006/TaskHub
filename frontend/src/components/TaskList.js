@@ -53,7 +53,7 @@ const TaskList = () => {
 
     try {
       const { data } = await axios.post(`${URL}/api/tasks`, formData);
-      toast.success("Task added successfully");
+      toast.success("Task added");
       setTasks([...tasks, data]); // Add the new task to the current tasks list
       setFormData({ // Clear the form
         ...formData,
@@ -68,7 +68,7 @@ const TaskList = () => {
     try {
       await axios.delete(`${URL}/api/tasks/${id}`);
       getTasks(); // Fetch the updated tasks
-      toast.success("Task deleted successfully");
+      toast.success("Task deleted");
     } catch (error) {
       toast.error(error.message);
     }
@@ -101,6 +101,7 @@ const TaskList = () => {
       await axios.put(`${URL}/api/tasks/${taskID}`, formData);
       setFormData({...formData, name: ""});
       setIsEditing(false);
+      toast.success("Task updated");
       getTasks();
     } catch (error) {
       toast.error(error.message);
