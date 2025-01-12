@@ -7,6 +7,8 @@ const mongoose = require("mongoose");
 const Task = require("./models/taskModel")
 const taskRoutes = require("./routes/taskRoute");
 const cors = require("cors");
+const path = require("path");
+
 const app = express();
 
 //Middleware
@@ -22,6 +24,19 @@ app.use(cors({
 
 app.use("/api/tasks", taskRoutes);
 
+// DEPLOYMENT CODE
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/build")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.resolve(__dirname, "../", "frontend", "build", "index.html"));
+  })
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running...");
+  });
+}
 
 // Routes
 app.get("", (req, res) => {
