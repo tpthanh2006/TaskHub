@@ -6,12 +6,12 @@ Welcome to my user-friendly task management platform, designed to help you effic
 - React, Redux, JavaScript, Node.js, Express.js, MongoDB, Postman,  Render
 
 📈 Highlights:
-- Efficient Task Management: Developed to handle 100+ tasks, enabling users to manage their tasks efficiently.
+- Efficient Task Management
 
-- Scalable Backend: Built a scalable backend to handle CRUD operations, achieving a 40% improvement in data processing efficiency compared to traditional task management systems.
+- Scalable Backend
 
-- High Uptime: Deployed the application with 90% uptime, ensuring reliable access.
+- High Uptime
 
-- Extensive API Testing: Conducted extensive API testing using Postman, reducing system bugs by 25% and delivering a smoother user experience.
+- Extensive API Testing
 
-- Deployment: Deployed on Render for seamless access and performance.
+- Deployment
